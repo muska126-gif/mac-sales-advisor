@@ -40,6 +40,11 @@
   .mac-price{color:var(--apple-blue);font-size:16px;font-weight:700;margin-top:8px;}
   .mac-edu-price{color:var(--green);font-size:16px;font-weight:700;margin-top:6px;}
   .edu-note{color:var(--sub);font-size:12px;margin:-10px 0 20px;line-height:1.5;}
+  .alt-box{background:#f5f5f7;border-radius:14px;padding:16px 18px;margin-bottom:12px;}
+  .alt-label{font-size:12px;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
+  .alt-name{font-size:16px;font-weight:700;color:var(--text);}
+  .alt-price{font-size:14px;color:var(--purple);font-weight:600;margin-top:4px;}
+  .alt-unavailable{color:var(--sub);font-size:14px;font-style:italic;}
   .bar-row{display:flex;align-items:center;margin-bottom:10px;font-size:14px;}
   .bar-label{width:130px;flex-shrink:0;}
   .bar-track{flex:1;background:#e5e5ea;border-radius:6px;height:14px;overflow:hidden;margin:0 10px;}
@@ -70,9 +75,9 @@ const DATA = {
     q2:["文書處理、Email、行政作業","簡報製作、會議安排、跨部門協作","長時間多工，同時處理多項工作"],
     q3:["偶爾使用 Office","每天都需要 Office 與視訊會議","幾乎整天都在多工處理工作"],
     recs:[
-      {scenario:"日常辦公", mac:"MacBook Neo 256GB", price:"NT$22,900", eduPrice:"NT$21,130（教育價，預估）"},
-      {scenario:"進階辦公", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）"},
-      {scenario:"重度多工", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）"}
+      {scenario:"日常辦公", mac:"MacBook Neo 256GB", price:"NT$22,900", eduPrice:"NT$21,130（教育價，預估）", desktop:"Mac mini M6 16GB/256GB", desktopPrice:"NT$29,900 起", tablet:"iPad (A16) 128GB + 巧控鍵盤雙面夾", tabletPrice:"NT$14,900 起（+NT$8,790 鍵盤）"},
+      {scenario:"進階辦公", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起（可加購記憶體）", tablet:"iPad Air 11吋 M4 128GB + 巧控鍵盤", tabletPrice:"NT$24,900 起（+NT$9,490 鍵盤）"},
+      {scenario:"重度多工", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起", tablet:"iPad Pro 11吋 M5 256GB + 巧控鍵盤", tabletPrice:"NT$39,900 起（+NT$9,490 鍵盤）"}
     ],
     baseline:{CPU:20,GPU:20,Memory:40,Storage:20,Mobility:80,Display:40},
     reasons:{CPU:"文書、Email 處理負載輕",GPU:"幾乎不依賴 GPU 加速",Memory:"多視窗、視訊會議同時運行",Storage:"文件、簡報檔案量不大",Mobility:"常需在辦公室、會議室間移動",Display:"偶爾外接螢幕做簡報"},
@@ -84,9 +89,9 @@ const DATA = {
     q2:["報表整理、資料輸入","營運分析、財務管理","商業分析、數據決策"],
     q3:["很少處理大型資料","每天分析大量資料","經常開大型 Excel、Power BI 或 ERP"],
     recs:[
-      {scenario:"一般營運", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）"},
-      {scenario:"商務分析", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）"},
-      {scenario:"大型資料分析", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）"}
+      {scenario:"一般營運", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）", desktop:"Mac mini M6 16GB/512GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"商務分析", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起"},
+      {scenario:"大型資料分析", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"}
     ],
     baseline:{CPU:40,GPU:20,Memory:60,Storage:40,Mobility:40,Display:60},
     reasons:{CPU:"Excel 運算、ERP 系統處理",GPU:"一般報表分析很少依賴 GPU",Memory:"大型試算表、多系統同時開啟",Storage:"報表、資料庫備份逐漸累積",Mobility:"辦公室與外勤並存",Display:"Power BI、Tableau 常需外接大螢幕"},
@@ -98,9 +103,9 @@ const DATA = {
     q2:["專案追蹤、日常協作","提案、跨部門溝通","同時管理多個專案與團隊"],
     q3:["偶爾需要開會","每天都需要跨部門合作","幾乎整天都在協調與管理專案"],
     recs:[
-      {scenario:"一般專案協作", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）"},
-      {scenario:"多專案管理", mac:"MacBook Pro 14吋 M5 24GB / 512GB", price:"NT$74,900 起", eduPrice:"NT$61,690 起（教育價，預估）"},
-      {scenario:"大型跨部門專案", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）"}
+      {scenario:"一般專案協作", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起（辦公室固定座位適用）", tablet:"iPad Air 11吋 M4 128GB + 巧控鍵盤", tabletPrice:"NT$24,900 起（+NT$9,490 鍵盤）"},
+      {scenario:"多專案管理", mac:"MacBook Pro 14吋 M5 24GB / 512GB", price:"NT$74,900 起", eduPrice:"NT$61,690 起（教育價，預估）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起", tablet:"iPad Pro 11吋 M5 256GB + 巧控鍵盤", tabletPrice:"NT$39,900 起（+NT$9,490 鍵盤）"},
+      {scenario:"大型跨部門專案", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起", tablet:"iPad Pro 13吋 M5 256GB + 巧控鍵盤", tabletPrice:"NT$50,900 起（+NT$9,890 鍵盤）"}
     ],
     baseline:{CPU:40,GPU:20,Memory:60,Storage:40,Mobility:80,Display:60},
     reasons:{CPU:"多工具切換、AI 輔助工作",GPU:"幾乎不依賴 GPU",Memory:"Notion、Slack、Jira、Confluence 等多工具同時運行",Storage:"專案文件、簡報檔案累積",Mobility:"經常出差、跨辦公室移動",Display:"提案簡報、跨部門會議常需外接螢幕"},
@@ -112,9 +117,9 @@ const DATA = {
     q2:["社群貼文、Banner、EDM","UI／UX、網站、App 設計","品牌設計、多人協作、大型設計系統"],
     q3:["很少同時開很多大型檔案","常同時開 Photoshop、Illustrator、Figma","經常處理大型 PSD、AI、多畫板專案"],
     recs:[
-      {scenario:"入門設計", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）"},
-      {scenario:"UI／UX", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）"},
-      {scenario:"專業設計", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）"}
+      {scenario:"入門設計", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）", desktop:"iMac M4 8核心 16GB/256GB", desktopPrice:"NT$49,900 起", tablet:"iPad Air 11吋 M4 128GB + Apple Pencil Pro", tabletPrice:"NT$24,900 起（+NT$4,390 Pencil）"},
+      {scenario:"UI／UX", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"iMac M4 10核心 16GB/512GB", desktopPrice:"NT$57,900 起", tablet:"iPad Pro 11吋 M5 256GB + Apple Pencil Pro", tabletPrice:"NT$39,900 起（+Pencil 需另購）"},
+      {scenario:"專業設計", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起", tablet:"iPad Pro 13吋 M5 512GB + Apple Pencil Pro", tabletPrice:"NT$46,900 起（草稿／外出提案輔助）"}
     ],
     baseline:{CPU:40,GPU:60,Memory:60,Storage:40,Mobility:60,Display:60},
     reasons:{CPU:"修圖、向量運算，但不是長時間高運算",GPU:"Photoshop、Figma 需要 GPU 加速",Memory:"多個 Adobe 軟體同時開啟",Storage:"PSD、AI 檔案逐漸累積",Mobility:"常在公司、客戶、咖啡廳切換工作",Display:"常外接 4K／5K 螢幕"}
@@ -125,9 +130,9 @@ const DATA = {
     q2:["修圖、1080p 短影音","4K 剪輯、多軌影片","6K／8K RAW、特效、調色"],
     q3:["偶爾輸出影片","每天都要剪片","每天都在 Render"],
     recs:[
-      {scenario:"修圖、1080p", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）"},
-      {scenario:"4K 剪輯", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）"},
-      {scenario:"8K RAW、AE", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）"}
+      {scenario:"修圖、1080p", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"iMac M4 10核心 16GB/512GB", desktopPrice:"NT$57,900 起"},
+      {scenario:"4K 剪輯", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"},
+      {scenario:"8K RAW、AE", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"}
     ],
     baseline:{CPU:60,GPU:80,Memory:60,Storage:80,Mobility:40,Display:60},
     reasons:{CPU:"影片編碼、Render",GPU:"剪輯、調色、特效需要強力 GPU",Memory:"多軌時間軸、AE、Resolve",Storage:"RAW、影片素材容量龐大",Mobility:"依工作型態而定",Display:"常使用雙螢幕、色彩管理螢幕"}
@@ -138,9 +143,9 @@ const DATA = {
     q2:["一般程式開發","同時使用 Docker、資料庫、模擬器","大型 Monorepo、多專案開發"],
     q3:["Build 很快","Build 偶爾需要等待","Build 很久、每天都在編譯"],
     recs:[
-      {scenario:"一般開發", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）"},
-      {scenario:"Docker、Xcode", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）"},
-      {scenario:"大型專案", mac:"MacBook Pro 16吋 M5 Pro 48GB / 1TB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）"}
+      {scenario:"一般開發", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起", tablet:"iPad Pro 11吋 M5 256GB + 巧控鍵盤", tabletPrice:"NT$39,900 起（+NT$9,490 鍵盤，適合輕量程式碼檢視／文件工作）"},
+      {scenario:"Docker、Xcode", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起", tablet:"—", tabletPrice:"不建議（Docker／模擬器需完整 macOS 環境）"},
+      {scenario:"大型專案", mac:"MacBook Pro 16吋 M5 Pro 48GB / 1TB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）", tablet:"—", tabletPrice:"不建議（大型專案需完整 macOS 開發環境）"}
     ],
     baseline:{CPU:80,GPU:20,Memory:60,Storage:40,Mobility:60,Display:60},
     reasons:{CPU:"Build、Compile、Docker 高度依賴 CPU",GPU:"一般開發很少依賴 GPU",Memory:"Docker、IDE、多服務同時運行",Storage:"專案、SDK、Docker Image",Mobility:"經常攜帶工作",Display:"雙螢幕、多螢幕開發"}
@@ -151,9 +156,9 @@ const DATA = {
     q2:["使用 ChatGPT、Claude 等雲端 AI","本機執行 Ollama、LM Studio","本機執行大型 LLM、Agent、AI 工作流程"],
     q3:["不需要下載模型","偶爾下載 7B～14B 模型","經常執行 32B 以上模型"],
     recs:[
-      {scenario:"AI 使用者", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）"},
-      {scenario:"本地 AI", mac:"MacBook Pro 14吋 M5 Pro 48GB / 1TB", price:"NT$105,900 起", eduPrice:"NT$99,530 起（教育價，預估）"},
-      {scenario:"大型 LLM", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB 或 Mac Studio（M3 Ultra）", price:"NT$174,900 起／Mac Studio 96GB/1TB NT$184,900 起", eduPrice:"NT$164,410 起／Mac Studio NT$173,810 起（教育價，預估）"}
+      {scenario:"AI 使用者", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"本地 AI", mac:"MacBook Pro 14吋 M5 Pro 48GB / 1TB", price:"NT$105,900 起", eduPrice:"NT$99,530 起（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"},
+      {scenario:"大型 LLM", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Ultra 96GB/1TB", desktopPrice:"NT$199,900 起"}
     ],
     baseline:{CPU:100,GPU:100,Memory:100,Storage:80,Mobility:40,Display:40},
     reasons:{CPU:"模型推論、Agent 運算",GPU:"LLM、Diffusion、ComfyUI 高度依賴 GPU",Memory:"Unified Memory 決定可跑的模型大小",Storage:"模型動輒數十 GB",Mobility:"本機 AI 或固定工作站皆常見",Display:"一般外接需求即可"}
@@ -164,9 +169,9 @@ const DATA = {
     q2:["Excel、CSV、小型分析","Python、SQL、百萬筆資料","機器學習、大型資料集"],
     q3:["很少跑長時間分析","每天都會執行分析","經常訓練模型或執行大量運算"],
     recs:[
-      {scenario:"一般分析", mac:"MacBook Air 13吋 M5 16/24GB", price:"NT$42,900〜46,400", eduPrice:"NT$39,590〜42,740（教育價）"},
-      {scenario:"Data Science", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）"},
-      {scenario:"ML／大型資料", mac:"MacBook Pro 16吋 M5 Pro 48GB / 1TB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）"}
+      {scenario:"一般分析", mac:"MacBook Air 13吋 M5 16/24GB", price:"NT$42,900〜46,400", eduPrice:"NT$39,590〜42,740（教育價）", desktop:"Mac mini M6 16/24GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"Data Science", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起"},
+      {scenario:"ML／大型資料", mac:"MacBook Pro 16吋 M5 Pro 48GB / 1TB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"}
     ],
     baseline:{CPU:60,GPU:40,Memory:60,Storage:60,Mobility:40,Display:60},
     reasons:{CPU:"SQL、Python、ETL 運算",GPU:"ML、視覺化可能使用 GPU",Memory:"DataFrame、Notebook 佔用大量記憶體",Storage:"Dataset、資料庫備份",Mobility:"辦公室與遠端皆常見",Display:"Tableau、多視窗分析"}
@@ -177,9 +182,9 @@ const DATA = {
     q2:["建模","動畫、模擬","大型場景、遊戲開發、渲染"],
     q3:["偶爾渲染","每週都會渲染","每天都在渲染"],
     recs:[
-      {scenario:"建模", mac:"MacBook Pro 14吋 M5 Pro 24GB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）"},
-      {scenario:"動畫", mac:"MacBook Pro 16吋 M5 Pro 48GB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）"},
-      {scenario:"大型渲染", mac:"MacBook Pro 16吋 M5 Max 64GB+ 或 Mac Studio（M3 Ultra）", price:"NT$174,900 起／Mac Studio 96GB/1TB NT$184,900 起", eduPrice:"NT$164,410 起／Mac Studio NT$173,810 起（教育價，預估）"}
+      {scenario:"建模", mac:"MacBook Pro 14吋 M5 Pro 24GB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"},
+      {scenario:"動畫", mac:"MacBook Pro 16吋 M5 Pro 48GB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"},
+      {scenario:"大型渲染", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Ultra 96GB/1TB", desktopPrice:"NT$199,900 起"}
     ],
     baseline:{CPU:60,GPU:100,Memory:60,Storage:60,Mobility:40,Display:60},
     reasons:{CPU:"模擬、編譯、Bake",GPU:"Render、Viewport、光追高度依賴 GPU",Memory:"大型場景、貼圖佔用大量記憶體",Storage:"專案、素材、快取容量需求高",Mobility:"工作室與外出並存",Display:"多螢幕、繪圖螢幕常見"}
@@ -482,6 +487,24 @@ function renderResult(cat){
       ${state.isEdu && rec.eduPrice ? `<div class="mac-edu-price">🎓 教育價：${rec.eduPrice}</div>` : ''}
     </div>
     ${state.isEdu && rec.eduPrice ? `<div class="edu-note">＊教育價需以有效學生／教職員身分驗證資格，實際優惠內容請以官網當期公告為準</div>` : ''}
+
+    ${rec.desktop ? `
+    <div class="section-h">🖥️ 桌機替代方案</div>
+    <div class="alt-box">
+      <div class="alt-label">Desktop Alternative</div>
+      <div class="alt-name">${rec.desktop}</div>
+      <div class="alt-price">💰 ${rec.desktopPrice}</div>
+    </div>` : ''}
+
+    ${rec.tablet ? `
+    <div class="section-h">📱 平板替代方案</div>
+    <div class="alt-box">
+      <div class="alt-label">Tablet Alternative</div>
+      ${rec.tablet === '—'
+        ? `<div class="alt-unavailable">${rec.tabletPrice}</div>`
+        : `<div class="alt-name">${rec.tablet}</div><div class="alt-price">💰 ${rec.tabletPrice}</div>`
+      }
+    </div>` : ''}
 
     <div class="section-h">工作需求分析（依權重模型推估）</div>
     ${barsHtml}
