@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mac 全方位客戶需求探索</title>
+<style>
+  :root{
+    --apple-blue:#0071e3; --bg:#f5f5f7; --card:#ffffff; --text:#1d1d1f; --sub:#6e6e73;
+    --green:#34c759; --orange:#ff9500; --red:#ff3b30; --purple:#af52de;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);}
+  header{padding:28px 20px 8px;text-align:center;}
+  header h1{font-size:26px;margin:0 0 4px;}
+  header p{color:var(--sub);margin:0;font-size:14px;}
+  .wrap{max-width:820px;margin:0 auto;padding:20px;}
+  .card{background:var(--card);border-radius:18px;padding:26px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:18px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+  .cat-btn{cursor:pointer;border:2px solid transparent;background:#fff;border-radius:16px;padding:22px 14px;text-align:center;font-size:16px;font-weight:600;transition:.15s;box-shadow:0 1px 6px rgba(0,0,0,.06);}
+  .cat-btn:hover{transform:translateY(-3px);border-color:var(--apple-blue);}
+  .progress{display:flex;gap:6px;margin-bottom:20px;}
+  .progress div{flex:1;height:6px;border-radius:3px;background:#d2d2d7;}
+  .progress div.active{background:var(--apple-blue);}
+  .q-title{font-size:19px;font-weight:700;margin-bottom:16px;}
+  .q-hint{color:var(--sub);font-size:13px;margin:-10px 0 16px;}
+  .opt{display:block;width:100%;text-align:left;background:#f5f5f7;border:2px solid transparent;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;font-size:15px;transition:.12s;}
+  .opt:hover{background:#eaeaec;}
+  .opt.selected{border-color:var(--apple-blue);background:#e8f2fe;font-weight:600;}
+  .btn-row{display:flex;justify-content:space-between;margin-top:20px;}
+  button.nav{background:var(--apple-blue);color:#fff;border:none;padding:11px 22px;border-radius:22px;font-size:15px;cursor:pointer;}
+  button.nav.secondary{background:#e5e5ea;color:var(--text);}
+  button.nav:disabled{opacity:.4;cursor:not-allowed;}
+  .tag{display:inline-block;background:#e8f2fe;color:var(--apple-blue);padding:5px 12px;border-radius:14px;font-size:13px;margin:3px 4px 3px 0;}
+  .result-title{font-size:22px;font-weight:800;margin-bottom:4px;}
+  .result-sub{color:var(--sub);margin-bottom:18px;font-size:14px;}
+  .mac-box{background:linear-gradient(135deg,#f0f6ff,#e8f2fe);border-radius:16px;padding:20px;margin-bottom:20px;}
+  .mac-name{font-size:24px;font-weight:800;color:var(--apple-blue);}
+  .mac-scenario{color:var(--sub);font-size:14px;margin-top:4px;}
+  .mac-price{color:var(--apple-blue);font-size:16px;font-weight:700;margin-top:8px;}
+  .mac-edu-price{color:var(--green);font-size:16px;font-weight:700;margin-top:6px;}
+  .edu-note{color:var(--sub);font-size:12px;margin:-10px 0 20px;line-height:1.5;}
+  .bar-row{display:flex;align-items:center;margin-bottom:10px;font-size:14px;}
+  .bar-label{width:130px;flex-shrink:0;}
+  .bar-track{flex:1;background:#e5e5ea;border-radius:6px;height:14px;overflow:hidden;margin:0 10px;}
+  .bar-fill{height:100%;border-radius:6px;}
+  .bar-val{width:40px;text-align:right;color:var(--sub);font-size:13px;}
+  .talk-list li{margin-bottom:8px;line-height:1.5;}
+  .section-h{font-weight:700;font-size:15px;margin:18px 0 8px;color:var(--sub);text-transform:uppercase;letter-spacing:.03em;}
+  .pill-tools{margin-bottom:6px;}
+  .breadcrumb{color:var(--sub);font-size:12px;margin-bottom:10px;}
+  .restart{text-align:center;margin-top:10px;}
+  .restart a{color:var(--apple-blue);cursor:pointer;font-size:14px;text-decoration:none;}
+  footer{text-align:center;color:var(--sub);font-size:12px;padding:10px 0 30px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>Mac 全方位客戶需求探索</h1>
+  <p>快速掌握客戶需求並給出精準推薦與銷售話術</p>
+</header>
+<div class="wrap" id="app"></div>
+<footer>內部銷售輔助工具 · 資料模型可依實際庫存 / 新機型調整</footer>
+
+<script>
+const DATA = {
+  office: {
+    group:"office", icon:"✍️", name:"日常辦公",
+    tools:["Microsoft Office（Word、Excel、PowerPoint）","Google Workspace（Docs、Sheets、Slides）","Outlook／Gmail","Teams／Zoom／Google Meet","Adobe Acrobat（PDF）","ChatGPT／Copilot／Gemini"],
+    q2:["文書處理、Email、行政作業","簡報製作、會議安排、跨部門協作","長時間多工，同時處理多項工作"],
+    q3:["偶爾使用 Office","每天都需要 Office 與視訊會議","幾乎整天都在多工處理工作"],
+    recs:[
+      {scenario:"日常辦公", mac:"MacBook Neo 256GB", price:"NT$22,900", eduPrice:"NT$21,130（教育價，預估）", desktop:"Mac mini M6 16GB/256GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"進階辦公", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起（可加購記憶體）"},
+      {scenario:"重度多工", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起"}
+    ],
+    baseline:{CPU:20,GPU:20,Memory:40,Storage:20,Mobility:80,Display:40},
+    reasons:{CPU:"文書、Email 處理負載輕",GPU:"幾乎不依賴 GPU 加速",Memory:"多視窗、視訊會議同時運行",Storage:"文件、簡報檔案量不大",Mobility:"常需在辦公室、會議室間移動",Display:"偶爾外接螢幕做簡報"},
+    reps:["行政","人資","秘書","業務助理","客服","櫃檯／Reception","法務助理","醫療行政","學校行政","採購助理","總務","保險內勤","銀行內勤","公部門行政"]
+  },
+  bizops: {
+    group:"office", icon:"📈", name:"商務營運",
+    tools:["Microsoft Excel","Power BI／Tableau","SQL","ERP（SAP、Oracle、鼎新）","CRM（Salesforce、HubSpot）","ChatGPT／Copilot"],
+    q2:["報表整理、資料輸入","營運分析、財務管理","商業分析、數據決策"],
+    q3:["很少處理大型資料","每天分析大量資料","經常開大型 Excel、Power BI 或 ERP"],
+    recs:[
+      {scenario:"一般營運", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）", desktop:"Mac mini M6 16GB/512GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"商務分析", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起"},
+      {scenario:"大型資料分析", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"}
+    ],
+    baseline:{CPU:40,GPU:20,Memory:60,Storage:40,Mobility:40,Display:60},
+    reasons:{CPU:"Excel 運算、ERP 系統處理",GPU:"一般報表分析很少依賴 GPU",Memory:"大型試算表、多系統同時開啟",Storage:"報表、資料庫備份逐漸累積",Mobility:"辦公室與外勤並存",Display:"Power BI、Tableau 常需外接大螢幕"},
+    reps:["會計","財務","FP&A","稽核","採購","營運","電商營運","商業分析","Data Analyst","BI Analyst","Sales Operations","Revenue Operations","Supply Chain","Logistics","Inventory Planner","Demand Planner","CRM Manager","Category Manager","通路管理"]
+  },
+  project: {
+    group:"office", icon:"🚀", name:"專案協作",
+    tools:["Notion","Slack／Teams","Jira／Asana／Monday","Confluence","Microsoft PowerPoint","ChatGPT／Copilot"],
+    q2:["專案追蹤、日常協作","提案、跨部門溝通","同時管理多個專案與團隊"],
+    q3:["偶爾需要開會","每天都需要跨部門合作","幾乎整天都在協調與管理專案"],
+    recs:[
+      {scenario:"一般專案協作", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起（辦公室固定座位適用）"},
+      {scenario:"多專案管理", mac:"MacBook Pro 14吋 M5 24GB / 512GB", price:"NT$74,900 起", eduPrice:"NT$61,690 起（教育價，預估）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起"},
+      {scenario:"大型跨部門專案", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"}
+    ],
+    baseline:{CPU:40,GPU:20,Memory:60,Storage:40,Mobility:80,Display:60},
+    reasons:{CPU:"多工具切換、AI 輔助工作",GPU:"幾乎不依賴 GPU",Memory:"Notion、Slack、Jira、Confluence 等多工具同時運行",Storage:"專案文件、簡報檔案累積",Mobility:"經常出差、跨辦公室移動",Display:"提案簡報、跨部門會議常需外接螢幕"},
+    reps:["PM","Product Manager","Product Owner","專案經理","Program Manager","Scrum Master","Project Coordinator","行銷企劃","部門主管","Team Lead","顧問","Business Consultant","Solution Consultant","Customer Success Manager","Customer Success","Technical Account Manager","Pre-sales","營運主管","策略企劃"]
+  },
+  design: {
+    group:"pro", icon:"🎨", name:"視覺設計",
+    tools:["Photoshop","Illustrator","Figma","Sketch","Affinity Designer"],
+    q2:["社群貼文、Banner、EDM","UI／UX、網站、App 設計","品牌設計、多人協作、大型設計系統"],
+    q3:["很少同時開很多大型檔案","常同時開 Photoshop、Illustrator、Figma","經常處理大型 PSD、AI、多畫板專案"],
+    recs:[
+      {scenario:"入門設計", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）", desktop:"iMac M4 8核心 16GB/256GB", desktopPrice:"NT$49,900 起"},
+      {scenario:"UI／UX", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"iMac M4 10核心 16GB/512GB", desktopPrice:"NT$57,900 起"},
+      {scenario:"專業設計", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"}
+    ],
+    baseline:{CPU:40,GPU:60,Memory:60,Storage:40,Mobility:60,Display:60},
+    reasons:{CPU:"修圖、向量運算，但不是長時間高運算",GPU:"Photoshop、Figma 需要 GPU 加速",Memory:"多個 Adobe 軟體同時開啟",Storage:"PSD、AI 檔案逐漸累積",Mobility:"常在公司、客戶、咖啡廳切換工作",Display:"常外接 4K／5K 螢幕"}
+  },
+  video: {
+    group:"pro", icon:"🎬", name:"影音創作",
+    tools:["Lightroom","Photoshop","Premiere Pro","Final Cut Pro","DaVinci Resolve","After Effects"],
+    q2:["修圖、1080p 短影音","4K 剪輯、多軌影片","6K／8K RAW、特效、調色"],
+    q3:["偶爾輸出影片","每天都要剪片","每天都在 Render"],
+    recs:[
+      {scenario:"修圖、1080p", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"iMac M4 10核心 16GB/512GB", desktopPrice:"NT$57,900 起"},
+      {scenario:"4K 剪輯", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"},
+      {scenario:"8K RAW、AE", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"}
+    ],
+    baseline:{CPU:60,GPU:80,Memory:60,Storage:80,Mobility:40,Display:60},
+    reasons:{CPU:"影片編碼、Render",GPU:"剪輯、調色、特效需要強力 GPU",Memory:"多軌時間軸、AE、Resolve",Storage:"RAW、影片素材容量龐大",Mobility:"依工作型態而定",Display:"常使用雙螢幕、色彩管理螢幕"}
+  },
+  dev: {
+    group:"pro", icon:"💻", name:"軟體開發",
+    tools:["VS Code","Xcode","Android Studio","Docker","Cursor","JetBrains IDE"],
+    q2:["一般程式開發","同時使用 Docker、資料庫、模擬器","大型 Monorepo、多專案開發"],
+    q3:["Build 很快","Build 偶爾需要等待","Build 很久、每天都在編譯"],
+    recs:[
+      {scenario:"一般開發", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"Docker、Xcode", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起"},
+      {scenario:"大型專案", mac:"MacBook Pro 16吋 M5 Pro 48GB / 1TB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"}
+    ],
+    baseline:{CPU:80,GPU:20,Memory:60,Storage:40,Mobility:60,Display:60},
+    reasons:{CPU:"Build、Compile、Docker 高度依賴 CPU",GPU:"一般開發很少依賴 GPU",Memory:"Docker、IDE、多服務同時運行",Storage:"專案、SDK、Docker Image",Mobility:"經常攜帶工作",Display:"雙螢幕、多螢幕開發"}
+  },
+  ai: {
+    group:"pro", icon:"🤖", name:"AI／LLM",
+    tools:["ChatGPT","Claude","Cursor","Claude Code","Ollama","LM Studio","PyTorch","ComfyUI"],
+    q2:["使用 ChatGPT、Claude 等雲端 AI","本機執行 Ollama、LM Studio","本機執行大型 LLM、Agent、AI 工作流程"],
+    q3:["不需要下載模型","偶爾下載 7B～14B 模型","經常執行 32B 以上模型"],
+    recs:[
+      {scenario:"AI 使用者", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"Mac mini M6 24GB/512GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"本地 AI", mac:"MacBook Pro 14吋 M5 Pro 48GB / 1TB", price:"NT$105,900 起", eduPrice:"NT$99,530 起（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"},
+      {scenario:"大型 LLM", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Ultra 96GB/1TB", desktopPrice:"NT$199,900 起"}
+    ],
+    baseline:{CPU:100,GPU:100,Memory:100,Storage:80,Mobility:40,Display:40},
+    reasons:{CPU:"模型推論、Agent 運算",GPU:"LLM、Diffusion、ComfyUI 高度依賴 GPU",Memory:"Unified Memory 決定可跑的模型大小",Storage:"模型動輒數十 GB",Mobility:"本機 AI 或固定工作站皆常見",Display:"一般外接需求即可"}
+  },
+  data: {
+    group:"pro", icon:"📊", name:"資料分析",
+    tools:["Excel","Python","Jupyter","RStudio","SQL","Tableau","Power BI"],
+    q2:["Excel、CSV、小型分析","Python、SQL、百萬筆資料","機器學習、大型資料集"],
+    q3:["很少跑長時間分析","每天都會執行分析","經常訓練模型或執行大量運算"],
+    recs:[
+      {scenario:"一般分析", mac:"MacBook Air 13吋 M5 16/24GB", price:"NT$42,900〜46,400", eduPrice:"NT$39,590〜42,740（教育價）", desktop:"Mac mini M6 16/24GB", desktopPrice:"NT$29,900 起"},
+      {scenario:"Data Science", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac mini M5 Pro 24GB/512GB", desktopPrice:"NT$59,900 起"},
+      {scenario:"ML／大型資料", mac:"MacBook Pro 16吋 M5 Pro 48GB / 1TB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"}
+    ],
+    baseline:{CPU:60,GPU:40,Memory:60,Storage:60,Mobility:40,Display:60},
+    reasons:{CPU:"SQL、Python、ETL 運算",GPU:"ML、視覺化可能使用 GPU",Memory:"DataFrame、Notebook 佔用大量記憶體",Storage:"Dataset、資料庫備份",Mobility:"辦公室與遠端皆常見",Display:"Tableau、多視窗分析"}
+  },
+  d3: {
+    group:"pro", icon:"🎮", name:"3D／CAD／遊戲",
+    tools:["Blender","Maya","Cinema 4D","Unity","Unreal Engine","Fusion 360"],
+    q2:["建模","動畫、模擬","大型場景、遊戲開發、渲染"],
+    q3:["偶爾渲染","每週都會渲染","每天都在渲染"],
+    recs:[
+      {scenario:"建模", mac:"MacBook Pro 14吋 M5 Pro 24GB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"},
+      {scenario:"動畫", mac:"MacBook Pro 16吋 M5 Pro 48GB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"},
+      {scenario:"大型渲染", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Ultra 96GB/1TB", desktopPrice:"NT$199,900 起"}
+    ],
+    baseline:{CPU:60,GPU:100,Memory:60,Storage:60,Mobility:40,Display:60},
+    reasons:{CPU:"模擬、編譯、Bake",GPU:"Render、Viewport、光追高度依賴 GPU",Memory:"大型場景、貼圖佔用大量記憶體",Storage:"專案、素材、快取容量需求高",Mobility:"工作室與外出並存",Display:"多螢幕、繪圖螢幕常見"}
+  }
+};
+
+// 教育導流地圖：身份只是入口，內容才決定推薦結果，全部沿用既有九大工作類型
+const EDU_CONTENT_MAP = [
+  {label:"一般課程、文書、報告", targets:["office"]},
+  {label:"商管、資料分析", targets:["bizops","data"]},
+  {label:"程式開發、AI", targets:["dev","ai"]},
+  {label:"設計、影音創作", targets:["design","video"]},
+  {label:"3D、建築、工程", targets:["d3"]}
+];
+const EDU_RESEARCH_MAP = [
+  {label:"商管、資料分析", targets:["bizops","data"]},
+  {label:"程式開發、AI", targets:["dev","ai"]},
+  {label:"設計、影音創作", targets:["design","video"]},
+  {label:"3D、建築、工程", targets:["d3"]},
+  {label:"其他研究", targets:["office"]}
+];
+
+const DIM_LABEL = {CPU:"🧠 CPU",GPU:"🎮 GPU",Memory:"🧠 統一記憶體",Storage:"💾 儲存空間",Mobility:"💼 行動性",Display:"🖥️ 螢幕/擴充"};
+const DIM_COLOR = {CPU:"#0071e3",GPU:"#ff3b30",Memory:"#34c759",Storage:"#ff9500",Mobility:"#af52de",Display:"#5ac8fa"};
+
+const GROUPS = [
+  {key:"office", icon:"👔", label:"上班族", desc:"日常辦公、商務營運、專案協作"},
+  {key:"pro", icon:"🎯", label:"專業客戶", desc:"視覺設計、影音創作、軟體開發、AI／LLM、資料分析、3D／CAD／遊戲"},
+  {key:"education", icon:"🎓", label:"教育", desc:"學生／教師，依學習或工作內容導流至對應類型"}
+];
+
+let state = {};
+function initState(){
+  state = {
+    screen:"group", history:[],
+    groupKey:null, catKey:null, isEdu:false,
+    pendingTargets:null,
+    tools:[], q2:null, q3:null
+  };
+}
+initState();
+
+function goTo(screen){ state.history.push(state.screen); state.screen = screen; render(); }
+function goBack(){ const prev = state.history.pop(); if(prev!==undefined){ state.screen = prev; render(); } }
+function resetState(){ initState(); render(); }
+
+function render(){
+  const app = document.getElementById('app');
+  const s = state.screen;
+  if(s==="group"){ app.innerHTML = renderGroupSelect(); attachGroupEvents(); return; }
+  if(s==="cat"){ app.innerHTML = renderCatSelect(); attachCatEvents(); return; }
+  if(s==="eduIdentity"){ app.innerHTML = renderEduIdentity(); attachEduIdentityEvents(); return; }
+  if(s==="eduStudentQ2"){ app.innerHTML = renderEduContentPick("🎓 學生 — Q. 哪個最符合你的學習內容？", EDU_CONTENT_MAP, "studentPick"); attachEduPickEvents(EDU_CONTENT_MAP, "studentPick"); return; }
+  if(s==="eduEducatorQ2"){ app.innerHTML = renderEduEducatorQ2(); attachEduEducatorQ2Events(); return; }
+  if(s==="eduResearchQ3"){ app.innerHTML = renderEduContentPick("👩‍🏫 老師（研究）— Q. 你的研究內容偏向？", EDU_RESEARCH_MAP, "researchPick"); attachEduPickEvents(EDU_RESEARCH_MAP, "researchPick"); return; }
+  if(s==="eduTargetPick"){ app.innerHTML = renderEduTargetPick(); attachEduTargetPickEvents(); return; }
+  const cat = DATA[state.catKey];
+  if(s==="tool"){ app.innerHTML = renderProgress(1) + renderQ1(cat); attachQ1Events(); return; }
+  if(s==="q2"){ app.innerHTML = renderProgress(2) + renderQ2(cat); attachQ2Events(); return; }
+  if(s==="q3"){ app.innerHTML = renderProgress(3) + renderQ3(cat); attachQ3Events(); return; }
+  if(s==="result"){ app.innerHTML = renderResult(cat); attachResultEvents(); return; }
+}
+
+/* ---------- 族群選擇 ---------- */
+function renderGroupSelect(){
+  let html = '<div class="card"><div class="q-title">請選擇客戶的族群</div><div class="grid">';
+  GROUPS.forEach(g=>{
+    html += `<div class="cat-btn group-btn" data-key="${g.key}">${g.icon}<br>${g.label}<div style="font-weight:400;font-size:12px;color:var(--sub);margin-top:6px;">${g.desc}</div></div>`;
+  });
+  html += '</div></div>';
+  return html;
+}
+function attachGroupEvents(){
+  document.querySelectorAll('.group-btn').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const key = el.dataset.key;
+      state.groupKey = key;
+      if(key==="education"){ goTo("eduIdentity"); }
+      else { goTo("cat"); }
+    });
+  });
+}
+
+/* ---------- 一般類型選擇（上班族／專業客戶）---------- */
+function renderCatSelect(){
+  const group = GROUPS.find(g=>g.key===state.groupKey);
+  let html = `<div class="card"><div class="q-title">${group.icon} ${group.label} — 請選擇工作類型</div><div class="grid">`;
+  for(const key in DATA){
+    const c = DATA[key];
+    if(c.group !== state.groupKey) continue;
+    html += `<div class="cat-btn" data-key="${key}">${c.icon}<br>${c.name}</div>`;
+  }
+  html += `</div><div class="btn-row"><button class="nav secondary" id="backBtn">← 返回族群選擇</button><div></div></div></div>`;
+  return html;
+}
+function attachCatEvents(){
+  document.querySelectorAll('.cat-btn').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.catKey = el.dataset.key; state.isEdu = false; goTo("tool"); });
+  });
+  const backBtn = document.getElementById('backBtn');
+  if(backBtn) backBtn.addEventListener('click', goBack);
+}
+
+/* ---------- 教育導流 ---------- */
+function renderEduIdentity(){
+  return `<div class="card">
+    <div class="q-title">🎓 教育 — 請選擇你的身份</div>
+    <div class="opt edu-identity-opt" data-v="student">學生（Student）</div>
+    <div class="opt edu-identity-opt" data-v="educator">老師（Educator）</div>
+    <div class="btn-row"><button class="nav secondary" id="backBtn">← 返回族群選擇</button><div></div></div>
+  </div>`;
+}
+function attachEduIdentityEvents(){
+  document.querySelectorAll('.edu-identity-opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      if(el.dataset.v==="student"){ goTo("eduStudentQ2"); }
+      else { goTo("eduEducatorQ2"); }
+    });
+  });
+  document.getElementById('backBtn').addEventListener('click', goBack);
+}
+
+function renderEduEducatorQ2(){
+  return `<div class="card">
+    <div class="q-title">👩‍🏫 老師 — 哪個最符合你的工作？</div>
+    <div class="opt edu-educator-opt" data-v="prep">教學、備課</div>
+    <div class="opt edu-educator-opt" data-v="admin">教學、行政管理</div>
+    <div class="opt edu-educator-opt" data-v="research">教學、研究</div>
+    <div class="btn-row"><button class="nav secondary" id="backBtn">← 返回</button><div></div></div>
+  </div>`;
+}
+function attachEduEducatorQ2Events(){
+  document.querySelectorAll('.edu-educator-opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const v = el.dataset.v;
+      if(v==="prep"){ state.catKey="office"; state.isEdu=true; goTo("tool"); }
+      else if(v==="admin"){ state.catKey="project"; state.isEdu=true; goTo("tool"); }
+      else { goTo("eduResearchQ3"); }
+    });
+  });
+  document.getElementById('backBtn').addEventListener('click', goBack);
+}
+
+function renderEduContentPick(title, map, screenName){
+  let html = `<div class="card"><div class="q-title">${title}</div>`;
+  map.forEach((m,i)=>{
+    html += `<div class="opt edu-content-opt" data-i="${i}">${m.label}</div>`;
+  });
+  html += `<div class="btn-row"><button class="nav secondary" id="backBtn">← 返回</button><div></div></div></div>`;
+  return html;
+}
+function attachEduPickEvents(map, screenName){
+  document.querySelectorAll('.edu-content-opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const m = map[parseInt(el.dataset.i)];
+      state.isEdu = true;
+      if(m.targets.length===1){ state.catKey = m.targets[0]; goTo("tool"); }
+      else { state.pendingTargets = m.targets; goTo("eduTargetPick"); }
+    });
+  });
+  document.getElementById('backBtn').addEventListener('click', goBack);
+}
+
+function renderEduTargetPick(){
+  let html = `<div class="card"><div class="q-title">請選擇更符合客戶需求的工作類型</div><div class="grid">`;
+  state.pendingTargets.forEach(key=>{
+    const c = DATA[key];
+    html += `<div class="cat-btn" data-key="${key}">${c.icon}<br>${c.name}</div>`;
+  });
+  html += `</div><div class="btn-row"><button class="nav secondary" id="backBtn">← 返回</button><div></div></div></div>`;
+  return html;
+}
+function attachEduTargetPickEvents(){
+  document.querySelectorAll('.cat-btn').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.catKey = el.dataset.key; goTo("tool"); });
+  });
+  document.getElementById('backBtn').addEventListener('click', goBack);
+}
+
+/* ---------- 共用進度條 ---------- */
+function renderProgress(n){
+  let dots = '';
+  for(let i=1;i<=3;i++){ dots += `<div class="${i<=n?'active':''}"></div>`; }
+  return `<div class="card"><div class="progress">${dots}</div>`;
+}
+
+/* ---------- Q1 工具、Q2、Q3 ---------- */
+function renderQ1(cat){
+  let html = `<div class="q-title">Q1. 客戶最常使用哪些工具？（可複選）</div>`;
+  cat.tools.forEach((t)=>{
+    const sel = state.tools.includes(t) ? 'selected':'';
+    html += `<div class="opt tool-opt ${sel}" data-tool="${t}">${t}</div>`;
+  });
+  html += `<div class="btn-row"><button class="nav secondary" id="backBtn">← 返回</button><button class="nav" id="nextBtn">下一題 →</button></div></div>`;
+  return html;
+}
+function attachQ1Events(){
+  document.querySelectorAll('.tool-opt').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const t = el.dataset.tool;
+      const idx = state.tools.indexOf(t);
+      if(idx>-1) state.tools.splice(idx,1); else state.tools.push(t);
+      el.classList.toggle('selected');
+    });
+  });
+  document.getElementById('backBtn').addEventListener('click', goBack);
+  document.getElementById('nextBtn').addEventListener('click', ()=>{ goTo("q2"); });
+}
+
+function renderQ2(cat){
+  let html = `<div class="q-title">Q2. 哪個最符合客戶的工作內容？</div>`;
+  cat.q2.forEach((o,i)=>{
+    const sel = state.q2===i ? 'selected':'';
+    html += `<div class="opt q2-opt" data-i="${i}">${sel?'✅ ':''}${o}</div>`;
+  });
+  html += `<div class="btn-row"><button class="nav secondary" id="backBtn">← 返回</button><button class="nav" id="nextBtn" ${state.q2===null?'disabled':''}>下一題 →</button></div></div>`;
+  return html;
+}
+function attachQ2Events(){
+  document.querySelectorAll('.q2-opt').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.q2 = parseInt(el.dataset.i); render(); });
+  });
+  document.getElementById('backBtn').addEventListener('click', goBack);
+  const nextBtn = document.getElementById('nextBtn');
+  if(nextBtn) nextBtn.addEventListener('click', ()=>{ goTo("q3"); });
+}
+
+function renderQ3(cat){
+  let html = `<div class="q-title">Q3. 哪句最符合客戶的工作負載？</div>`;
+  cat.q3.forEach((o,i)=>{
+    const sel = state.q3===i ? 'selected':'';
+    html += `<div class="opt q3-opt" data-i="${i}">${sel?'✅ ':''}${o}</div>`;
+  });
+  html += `<div class="btn-row"><button class="nav secondary" id="backBtn">← 返回</button><button class="nav" id="nextBtn" ${state.q3===null?'disabled':''}>查看推薦 →</button></div></div>`;
+  return html;
+}
+function attachQ3Events(){
+  document.querySelectorAll('.q3-opt').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.q3 = parseInt(el.dataset.i); render(); });
+  });
+  document.getElementById('backBtn').addEventListener('click', goBack);
+  const nextBtn = document.getElementById('nextBtn');
+  if(nextBtn) nextBtn.addEventListener('click', ()=>{ goTo("result"); });
+}
+
+/* ---------- 結果 ---------- */
+function computeTier(){
+  return Math.max(state.q2, state.q3);
+}
+function scaleFactorForTier(tier){
+  return [0.6, 0.85, 1.0][tier];
+}
+
+function renderResult(cat){
+  const tier = computeTier();
+  const rec = cat.recs[tier];
+  const factor = scaleFactorForTier(tier);
+  const dims = Object.keys(cat.baseline);
+  const scored = dims.map(d=>({dim:d, score: Math.min(100, Math.round(cat.baseline[d]*factor))}));
+  scored.sort((a,b)=>b.score-a.score);
+
+  let barsHtml = '';
+  dims.forEach(d=>{
+    const score = Math.min(100, Math.round(cat.baseline[d]*factor));
+    barsHtml += `<div class="bar-row">
+      <div class="bar-label">${DIM_LABEL[d]}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${score}%;background:${DIM_COLOR[d]}"></div></div>
+      <div class="bar-val">${score}%</div>
+    </div>`;
+  });
+
+  let toolsHtml = state.tools.length
+    ? `<div class="pill-tools">${state.tools.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`
+    : `<div class="pill-tools" style="color:var(--sub);font-size:14px;">（未特別選擇工具）</div>`;
+
+  const top3 = scored.slice(0,3);
+  let talkHtml = '<ul class="talk-list">';
+  top3.forEach(s=>{
+    talkHtml += `<li><b>${DIM_LABEL[s.dim]}（${s.score}%）</b>：${cat.reasons[s.dim]}</li>`;
+  });
+  talkHtml += '</ul>';
+
+  const breadcrumb = state.isEdu
+    ? `<div class="breadcrumb">🎓 教育導流 → ${cat.icon} ${cat.name}</div>`
+    : `<div class="breadcrumb">${GROUPS.find(g=>g.key===cat.group)?.icon||''} ${GROUPS.find(g=>g.key===cat.group)?.label||''} → ${cat.icon} ${cat.name}</div>`;
+
+  return `
+  <div class="card">
+    ${breadcrumb}
+    <div class="result-title">${cat.icon} ${cat.name} — 需求分析結果</div>
+    <div class="result-sub">依據客戶回答自動計算</div>
+
+    <div class="section-h">客戶常用工具</div>
+    ${toolsHtml}
+
+    <div class="mac-box">
+      <div class="mac-scenario">適用情境：${rec.scenario}</div>
+      <div class="mac-name">👉 ${rec.mac}</div>
+      <div class="mac-price">💰 參考售價：${rec.price}</div>
+      ${state.isEdu && rec.eduPrice ? `<div class="mac-edu-price">🎓 教育價：${rec.eduPrice}</div>` : ''}
+    </div>
+    ${state.isEdu && rec.eduPrice ? `<div class="edu-note">＊教育價需以有效學生／教職員身分驗證資格，實際優惠內容請以官網當期公告為準</div>` : ''}
+
+    <div class="section-h">工作需求分析（依權重模型推估）</div>
+    ${barsHtml}
+
+    <div class="section-h">建議銷售話術重點（最需要強調的優勢）</div>
+    ${talkHtml}
+
+    <div class="restart"><a id="restartBtn">🔄 重新開始 / 換一位客戶</a></div>
+  </div>`;
+}
+function attachResultEvents(){
+  document.getElementById('restartBtn').addEventListener('click', resetState);
+}
+
+render();
+</script>
+</body>
+</html>
