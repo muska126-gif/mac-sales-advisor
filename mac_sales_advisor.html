@@ -119,7 +119,7 @@ const DATA = {
     recs:[
       {scenario:"入門設計", mac:"MacBook Air 13吋 M5 16GB / 512GB", price:"NT$42,900", eduPrice:"NT$39,590（教育價）", desktop:"iMac M6 10核心 16GB/256GB", desktopPrice:"NT$49,900 起", tablet:"iPad Air 11吋 M4 128GB + Apple Pencil Pro", tabletPrice:"NT$24,900 起（+NT$4,390 Pencil）"},
       {scenario:"UI／UX", mac:"MacBook Air 13吋 M5 24GB / 512GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"iMac M6 12核心 16GB/256GB", desktopPrice:"NT$57,900 起", tablet:"iPad Pro 11吋 M5 256GB + Apple Pencil Pro", tabletPrice:"NT$39,900 起（+Pencil 需另購）"},
-      {scenario:"專業設計", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起", tablet:"iPad Pro 13吋 M5 512GB + Apple Pencil Pro", tabletPrice:"NT$46,900 起（草稿／外出提案輔助）"}
+      {scenario:"專業設計", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起", tablet:"iPad Pro 13吋 M5 512GB + Apple Pencil Pro", tabletPrice:"NT$46,900 起（草稿／外出提案輔助）", screen:"MacBook Pro 14吋（PROLED XDR）M5 Pro 24GB / 1TB", screenPrice:"NT$97,900 起（比標準版多 NT$13,000）"}
     ],
     baseline:{CPU:40,GPU:60,Memory:60,Storage:40,Mobility:60,Display:60},
     reasons:{CPU:"修圖、向量運算，但不是長時間高運算",GPU:"Photoshop、Figma 需要 GPU 加速",Memory:"多個 Adobe 軟體同時開啟",Storage:"PSD、AI 檔案逐漸累積",Mobility:"常在公司、客戶、咖啡廳切換工作",Display:"常外接 4K／5K 螢幕"}
@@ -131,8 +131,8 @@ const DATA = {
     q3:["偶爾輸出影片","每天都要剪片","每天都在 Render"],
     recs:[
       {scenario:"修圖、1080p", mac:"MacBook Air 13吋 M5 24GB", price:"NT$46,400", eduPrice:"NT$42,740（教育價）", desktop:"iMac M6 12核心 16GB/256GB", desktopPrice:"NT$57,900 起"},
-      {scenario:"4K 剪輯", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"},
-      {scenario:"8K RAW、AE", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"}
+      {scenario:"4K 剪輯", mac:"MacBook Pro 14吋 M5 Pro 24GB / 1TB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起", screen:"MacBook Pro 14吋（PROLED XDR）M5 Pro 24GB / 1TB", screenPrice:"NT$97,900 起（比標準版多 NT$13,000）"},
+      {scenario:"8K RAW、AE", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）", screen:"MacBook Pro 16吋（PROLED XDR）M5 Max", screenPrice:"依配置而定（PROLED XDR M5 Max 機型 NT$152,900 起），請以官網為準"}
     ],
     baseline:{CPU:60,GPU:80,Memory:60,Storage:80,Mobility:40,Display:60},
     reasons:{CPU:"影片編碼、Render",GPU:"剪輯、調色、特效需要強力 GPU",Memory:"多軌時間軸、AE、Resolve",Storage:"RAW、影片素材容量龐大",Mobility:"依工作型態而定",Display:"常使用雙螢幕、色彩管理螢幕"}
@@ -183,8 +183,8 @@ const DATA = {
     q3:["偶爾渲染","每週都會渲染","每天都在渲染"],
     recs:[
       {scenario:"建模", mac:"MacBook Pro 14吋 M5 Pro 24GB", price:"NT$84,900", eduPrice:"NT$79,790（教育價）", desktop:"Mac Studio M5 Max 36GB/512GB", desktopPrice:"NT$84,900 起"},
-      {scenario:"動畫", mac:"MacBook Pro 16吋 M5 Pro 48GB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）"},
-      {scenario:"大型渲染", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Ultra 96GB/1TB", desktopPrice:"NT$199,900 起"}
+      {scenario:"動畫", mac:"MacBook Pro 16吋 M5 Pro 48GB", price:"NT$120,900", eduPrice:"NT$113,620（教育價，預估）", desktop:"Mac Studio M5 Max 64GB/1TB", desktopPrice:"NT$84,900 起（可升級至更高規格）", screen:"MacBook Pro 16吋（PROLED XDR）M5 Pro 48GB / 1TB", screenPrice:"NT$135,900（預估，比標準版多約 NT$15,000）"},
+      {scenario:"大型渲染", mac:"MacBook Pro 16吋 M5 Max 64GB+ / 2TB", price:"NT$174,900 起", eduPrice:"NT$164,410 起（教育價，預估）", desktop:"Mac Studio M5 Ultra 96GB/1TB", desktopPrice:"NT$199,900 起", screen:"MacBook Pro 16吋（PROLED XDR）M5 Max", screenPrice:"依配置而定（PROLED XDR M5 Max 機型 NT$152,900 起），請以官網為準"}
     ],
     baseline:{CPU:60,GPU:100,Memory:60,Storage:60,Mobility:40,Display:60},
     reasons:{CPU:"模擬、編譯、Bake",GPU:"Render、Viewport、光追高度依賴 GPU",Memory:"大型場景、貼圖佔用大量記憶體",Storage:"專案、素材、快取容量需求高",Mobility:"工作室與外出並存",Display:"多螢幕、繪圖螢幕常見"}
@@ -504,6 +504,21 @@ function renderResult(cat){
         ? `<div class="alt-unavailable">${rec.tabletPrice}</div>`
         : `<div class="alt-name">${rec.tablet}</div><div class="alt-price">💰 ${rec.tabletPrice}</div>`
       }
+    </div>` : ''}
+
+    ${rec.screen ? `
+    <div class="section-h">✨ 螢幕升級選項</div>
+    <div class="alt-box">
+      <div class="alt-label">Display Upgrade — 同晶片效能，升級 PROLED XDR 顯示器</div>
+      <div class="alt-name">${rec.screen}</div>
+      <div class="alt-price">💰 ${rec.screenPrice}</div>
+      <ul class="talk-list" style="margin:10px 0 0;padding-left:18px;font-size:13px;color:var(--text);">
+        <li>串聯式 OLED，10,000,000:1 對比度，暗部細節更清楚</li>
+        <li>全螢幕持續亮度 1000 尼特、HDR 峰值 2000 尼特，適合 HDR 剪輯與調色</li>
+        <li>10 億色，支援 P3 + Adobe RGB 廣色域，印刷與影像色彩更準確</li>
+        <li>ProMotion 10–120Hz，另有 47.95／48／50／59.94／60Hz 固定更新頻率，可對應影片幀率</li>
+        <li>支援多點觸控手勢；抗反射鍍膜，可選配奈米紋理玻璃</li>
+      </ul>
     </div>` : ''}
 
     <div class="section-h">工作需求分析（依權重模型推估）</div>
